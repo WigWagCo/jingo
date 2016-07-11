@@ -4,7 +4,9 @@ var router = require("express").Router(),
   passportLocal = require("passport-local"),
   passportGoogle = require("passport-google-oauth"),
   passportGithub = require("passport-github").Strategy,
-  tools = require("../lib/tools");
+  passportDiscourse = require("passport-discourse").Strategy,
+  tools = require("../lib/tools"),
+  util = require('util');
 
 var auth = app.locals.config.get("authentication");
 var passport = app.locals.passport;
@@ -32,6 +34,24 @@ router.get("/auth/github/callback", passport.authenticate("github", {
   successRedirect: proxyPath + "/auth/done",
   failureRedirect: proxyPath + "/login"
 }));
+
+router.get("/auth/discourse_sso", passport.authenticate("discourse"));
+router.get(passportDiscourse.route_callback, passport.authenticate("discourse", {
+  successRedirect: proxyPath + "/auth/done",
+  failureRedirect: proxyPath + "/login"
+}));
+
+if (auth.discourse_sso.enabled) {
+  var auth_discourse = new passportDiscourse({
+    secret: auth.discourse_sso.discourse_secret,
+    discourse_url: auth.discourse_sso.discourse_url,
+    debug: auth.discourse_sso.debug
+  },function(accessToken, refreshToken, profile, done){
+      usedAuthentication("discourse");
+      done(null, profile);
+  });
+  passport.use(auth_discourse);
+}
 
 if (auth.google.enabled) {
   var redirectURL = auth.google.redirectURL || app.locals.baseUrl + "/oauth2callback";

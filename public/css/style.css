@@ -624,6 +624,10 @@ a.btn-auth.btn-auth-github {
   background-position: 0px 50%;
 }
 
+a.btn-auth.btn-auth-wigwagtalk {
+  background-position: 0px 50%;
+}
+
 a.btn-auth:hover {
   opacity: .9;
 }

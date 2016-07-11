@@ -17,6 +17,10 @@ block content
       p
         +anchor('/auth/github', 'Github login').btn-auth.btn-auth-github
 
+    if (auth.discourse_sso.enabled)
+      p
+        +anchor('/auth/discourse_sso', 'Login via Talk WigWag').btn-auth.btn-auth-wigwagtalk
+        
     if (auth.google.enabled || auth.github.enabled)
       p
         +anchor("/", 'Cancel')
