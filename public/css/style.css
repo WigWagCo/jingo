@@ -1,3 +1,5 @@
+@import 'https://fonts.googleapis.com/css?family=Lato|Montserrat';
+
 @media print {
 	.col-md-2, .with-sidebar {
 		display: none;
@@ -6,8 +8,8 @@
 
 body {
   padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
-  font-family: "Ubuntu";
-  background-image: url(../img/bodybg.png);
+  font-family: "Lato", "Helvetica","Ubuntu", sans-serif;
+  background-color: rgb(234,237, 239);
 }
 
 a[href^="https://"],
@@ -28,7 +30,7 @@ a.logout i {
 }
 
 p.user {
-  color: white;
+  color: #555a5d;
   padding: 8px 0 0;
   margin-bottom: 0px;
   margin-right: -20px;
@@ -124,7 +126,7 @@ dl.search-results dt {
 h2,
 h1 {
   border-bottom: 1px solid #ddd;
-  font-family:"Ubuntu Condensed";
+  font-family:'Montserrat', 'Helvetica', 'Ubuntu', sans-serif;
   margin: 0 0 20px 0;
 }
 
@@ -240,9 +242,10 @@ hr {
 }
 
 .input-group.search input {
-  color: #fff;
-  background-color: #515151;
-  border-color: #111;
+  color: #555a5d;
+  background-color: #eaedef;
+  border-color: rgba (127, 135, 138, 74);
+  border-radius: 19px;
 }
 
 /* Overrides Bootstrap */
@@ -288,6 +291,13 @@ hr {
 
 .navbar-inverse .navbar-inner {
   background-image: none;
+}
+
+.navbar.navbar-inverse.navbar-fixed-top {
+    background-color:#fff;
+    box-shadow: 0 0 5px silver;
+    color: #333;
+    border-width: 0;
 }
 
 .jumbotron {
@@ -459,6 +469,21 @@ ul.doc-list > li .message {
   font-size: 9px;
   line-height: 12px;
   margin: 0;
+}
+
+.btn-primary {
+    background-color:#0094d9;
+    border-color:#0094d9;
+    transition: all 0.3s ease 0s;
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    color:#0094d9;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    background-color: #00527A;
+    border-color:#00527A;
 }
 
 /* Needed for wideArea */
