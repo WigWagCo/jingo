@@ -4,7 +4,7 @@ var router = require("express").Router(),
   passportLocal = require("passport-local"),
   passportGoogle = require("passport-google-oauth"),
   passportGithub = require("passport-github").Strategy,
-  passportDiscourse = require("../../passport-discourse").Strategy,
+  passportDiscourse = require("passport-discourse").Strategy,
   tools = require("../lib/tools"),
   util = require('util');
 
