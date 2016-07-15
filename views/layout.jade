@@ -13,6 +13,8 @@ include mixins/links
       +asset("/css/style.css")
       +asset("/css/ionicons.min.css")
       +asset("/css/shCoreDefault.css")
+      if hasCustomCSS()
+        +asset(customCSS)
       block styles
       if hasCustomStyle()
         style.
