@@ -8,12 +8,12 @@ block tools
 block content
 
   if !isAjax
-    #content.show
+    #content.show(style="#{CONTENT_STYLE}")
       mixin notice()
       mixin warning()
       !=content
   else
-    .jingo-content.jingo-show
+    .jingo-content.jingo-show(style="#{CONTENT_STYLE}")
       !=content
 
   p(class="#{isAjax ? 'jingo-footer' : 'footer'}") Updated by&nbsp;

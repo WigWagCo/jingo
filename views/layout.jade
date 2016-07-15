@@ -67,6 +67,7 @@ include mixins/links
         window.jQuery || document.write("<sc" + "ript src='#{proxyPath}/vendor/jquery.min.js'></scr" + "ipt>");
       +asset("/vendor/bootstrap/js/bootstrap.min.js")
       +asset("/js/app.js")
+      +asset("/js/sorttable.js")
       script.
         Jingo.init("#{proxyPath}");
       block scripts

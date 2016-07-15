@@ -75,6 +75,9 @@ function _getWiki(req, res) {
   });
 }
 
+// capture: -->[//]: # "PRAGMA CONTENT_STYLE width:150%"<--- on first line only 
+var PRAGMA_re = /^\[\/\/\]\:\s+\#\s\"PRAGMA\s+(([^\"\s]*)\s*([^\"]*))\"\s+/;
+
 function _getWikiPage(req, res) {
 
   var page = new models.Page(req.params.page, req.params.version);
@@ -92,10 +95,21 @@ function _getWikiPage(req, res) {
       res.locals.notice = req.session.notice;
       delete req.session.notice;
 
+      var CONTENT_STYLE = "";
+      var m = PRAGMA_re.exec(page.content);
+      if(m && m.length > 1) {
+        console.log("PRAGMA:",m[1]);
+        if(m[2] == 'CONTENT_STYLE') {
+          console.log("CONTENT_STYLE:",m[3]);
+          CONTENT_STYLE = m[3];
+        }
+      }
+
       res.render("show", {
         page: page,
         title: app.locals.config.get("application").title + " – " + page.title,
-        content: renderer.render("# " + page.title + "\n" + page.content)
+        content: renderer.render("# " + page.title + "\n" + page.content),
+        CONTENT_STYLE: CONTENT_STYLE
       });
     }
     else {
