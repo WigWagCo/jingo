@@ -3,6 +3,9 @@ extends layout
 include mixins/form
 include mixins/links
 
+mixin custom_anchor(v1,v2,classname)
+  +anchor(v1, v2)&attributes({'class':classname})
+
 block content
 
   #content
@@ -19,7 +22,7 @@ block content
 
     if (auth.discourse_sso.enabled)
       p
-        +anchor('/auth/discourse_sso', 'Login via Talk WigWag').btn-auth.btn-auth-wigwagtalk
+        +custom_anchor('/auth/discourse_sso', auth.discourse_sso.custom_btn_txt,auth.discourse_sso.custom_btn_css_class)
         
     if (auth.google.enabled || auth.github.enabled)
       p
