@@ -4,7 +4,8 @@ var router = require("express").Router(),
   renderer = require("../lib/renderer"),
   models = require("../lib/models"),
   corsEnabler = require("../lib/cors-enabler"),
-  app = require("../lib/app").getInstance();
+  app = require("../lib/app").getInstance(),
+  Promiserr = require("bluebird");
 
 var proxyPath = app.locals.config.getProxyPath();
 
@@ -76,7 +77,8 @@ function _getWiki(req, res) {
 }
 
 // capture: -->[//]: # "PRAGMA CONTENT_STYLE width:150%"<--- on first line only 
-var PRAGMA_re = /^\[\/\/\]\:\s+\#\s\"PRAGMA\s+(([^\"\s]*)\s*([^\"]*))\"\s+/;
+var PRAGMA_re = /^\[\/\/\]\:\s+\#\s\"PRAGMA\s+(([^\"\s]*)\s*([^\"]*))\"\s+/g;
+var get_page_url_re = /^\/[^\/]+(\/.*)/;
 
 function _getWikiPage(req, res) {
 
@@ -96,20 +98,55 @@ function _getWikiPage(req, res) {
       delete req.session.notice;
 
       var CONTENT_STYLE = "";
-      var m = PRAGMA_re.exec(page.content);
-      if(m && m.length > 1) {
-        console.log("PRAGMA:",m[1]);
-        if(m[2] == 'CONTENT_STYLE') {
-          console.log("CONTENT_STYLE:",m[3]);
-          CONTENT_STYLE = m[3];
-        }
+      var TOC_HTML = null;
+      var doPreRender = function() {        
+        var proms = [];
+        var m = PRAGMA_re.exec(page.content);
+        while(m) {
+          console.log("see PRAGMA:",m[1]);
+          if(m && m.length > 1) {
+            if(m[2] == 'CONTENT_STYLE') {
+              console.log("CONTENT_STYLE:",m[3]);
+              CONTENT_STYLE = m[3];
+            }
+            if(m[2] == 'TOC') {
+              var page_url = null;
+              var m2 = get_page_url_re.exec(req.url);
+              if(m2 && m2.length > 0) {
+                page_url = m2[1];
+              } else {
+                console.error("ERROR: Page has TOC, but URL is not a page?");
+              }
+
+              // also, see if a TOC exists - if so grab it.
+              var toc = new models.TOC(m[3],page_url);
+              proms.push(
+                toc.fetch().then(function(ret){
+                  console.log("Model TOC is: -->",ret);
+                  console.log("<--")
+                  TOC_HTML = renderer.makeTOCHTML(ret,page_url)
+                  console.log("HTML TOC is: -->",TOC_HTML);
+                  console.log("<--")
+
+                })
+              );
+            }
+          }
+          m = PRAGMA_re.exec(page.content);
+        }        
+        return Promiserr.all(proms); // wait for any deferred, then fulfill
       }
 
-      res.render("show", {
-        page: page,
-        title: app.locals.config.get("application").title + " – " + page.title,
-        content: renderer.render("# " + page.title + "\n" + page.content),
-        CONTENT_STYLE: CONTENT_STYLE
+      doPreRender().then(function(){
+        res.render("show", {
+          page: page,
+          title: app.locals.config.get("application").title + " – " + page.title,
+          content: renderer.render("# " + page.title + "\n" + page.content),
+          CONTENT_STYLE: CONTENT_STYLE,
+          TOC_HTML: TOC_HTML
+        });
+      }).catch(function(e){
+        console.error("@catch doPreRender:",e);
       });
     }
     else {

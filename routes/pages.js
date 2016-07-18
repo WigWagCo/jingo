@@ -17,9 +17,21 @@ router.get("/pages/:page/revert/:version", _getRevert);
 var pagesConfig = app.locals.config.get("pages");
 var proxyPath = app.locals.config.getProxyPath();
 
-function _deletePages(req, res) {
+var ON_log_dbg = function() {
+    var args = Array.prototype.slice.call(arguments);
+    args.unshift("[pages]");
+    console.log.apply(console,args);
+};
 
+var log_dbg = function() {}
+
+log_dbg = ON_log_dbg; // uncomment for debug
+
+
+function _deletePages(req, res) {
+  var get_page_url_re = /^\/[^\/]+(\/.*)/;
   var page = new models.Page(req.params.page);
+  var m = get_page_url_re.exec(req.url);
 
   if (page.isIndex() || !page.exists()) {
     req.session.notice = "The page cannot be deleted.";
@@ -29,7 +41,21 @@ function _deletePages(req, res) {
 
   page.author = req.user.asGitAuthor;
 
+  
+
   page.remove().then(function () {
+
+    // remove from TOC, if it has an entry
+    if(m && m.length > 1) {
+      var toc = new models.TOC(null,m[1]);
+      toc.lookupViaIndex().then(function(){
+        console.log("Was in TOC, removing");
+        toc.update({remove:true});
+      });
+    }
+
+
+
 
     page.unlock();
 
@@ -183,10 +209,25 @@ function _putPages(req, res) {
     savePage();
   }
 
+// TOC pragma: [//]: # "PRAGMA TOC Tutorial:Step 1:sub step 1"
+var TOC_PRAGMA_re = /^\s*\[\/\/\]\:\s+\#\s\"PRAGMA\s+TOC\s+([^\"\s]*\s*[^\"]*)\"\s+/m;
+
+var get_page_url_re = /^\/[^\/]+(\/.*)/;
+
   function savePage()  {
     page.title = req.body.pageTitle;
     page.content = req.body.content;
+
+    var originalURL = req.url;
+//    log_dbg("originalURL",req);
     page.save(req.body.message).then(function () {
+      var m = TOC_PRAGMA_re.exec(page.content,originalURL);
+      var m2 = get_page_url_re.exec(originalURL);
+      if(m && m.length > 1 && m2) {
+        log_dbg("Got TOC:",m[1],'for URL',m2[1]);
+        var toc = new models.TOC(m[1],m2[1]);
+        toc.update();
+      }
 
       page.unlock();
 

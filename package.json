@@ -42,15 +42,19 @@
     "marked": "^0.3.5",
     "method-override": "^2.3.0",
     "morgan": "^1.5.0",
+    "nedb": "^1.8.0",
     "node-syntaxhighlighter": "*",
     "passport": "^0.2.0",
+    "passport-discourse": "^1.0.0",
     "passport-github": "^0.1.5",
     "passport-google-oauth": "^0.1.5",
     "passport-local": "^1.0.0",
-    "passport-discourse": "^1.0.0",
     "semver": "^2.3.2",
     "serve-favicon": "^2.1.7",
-    "transliteration": "^0.1.1"
+    "transliteration": "^0.1.1",
+    "gulp": "*",
+    "gulp-less":"*",
+    "gulp-util":"*"
   },
   "devDependencies": {
     "chai": "*",
