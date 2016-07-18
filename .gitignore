@@ -2,3 +2,6 @@ node_modules/*
 config.yaml
 config.yml
 data/*
+*.db
+public/css/toc.css
+
