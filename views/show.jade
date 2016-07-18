@@ -7,6 +7,12 @@ block tools
 
 block content
 
+  div.in-page-tools
+    a.tool(href="/pages/" + page.wikiname + "/edit")
+      i.icon.ion-compose
+      div.button-txt
+        | edit page
+
   if !isAjax
     #content.show(style="#{CONTENT_STYLE}")
       mixin notice()

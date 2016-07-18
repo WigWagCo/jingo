@@ -793,6 +793,39 @@ a.btn-auth:hover {
   opacity: .9;
 }
 
+.in-page-tools {
+  padding-top: 30px;
+  padding-right: 30px;
+  float: right;
+}
+
+
+.in-page-tools .tool {
+  background-color: #0094d9;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+}
+
+.in-page-tools a.tool:hover {
+  text-decoration: none;
+}
+
+.in-page-tools .tool i {
+  font-size: 14px;
+}
+
+.tool .button-txt {
+  font-size: 10px;
+  display: inline;
+  top: -2px;
+  position: relative;
+}
+
+
 /** open it up on modern laptops / desktops */
 @media (min-width: 1600px) {
   .container {
