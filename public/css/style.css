@@ -793,6 +793,19 @@ a.btn-auth:hover {
   opacity: .9;
 }
 
+/** open it up on modern laptops / desktops */
+@media (min-width: 1600px) {
+  .container {
+    width: 1500px;
+  }
+  .with-sidebar.sidebar-right {
+    float: right;
+    margin-right: -230px;
+    width: 230px;
+  }
+}
+
+
 @media (min-width: 768px) {
   body {
     padding-top: 60px;

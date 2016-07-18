@@ -41,8 +41,6 @@ function _deletePages(req, res) {
 
   page.author = req.user.asGitAuthor;
 
-  
-
   page.remove().then(function () {
 
     // remove from TOC, if it has an entry
@@ -51,11 +49,8 @@ function _deletePages(req, res) {
       toc.lookupViaIndex().then(function(){
         console.log("Was in TOC, removing");
         toc.update({remove:true});
-      });
+      },function(){});
     }
-
-
-
 
     page.unlock();
 
