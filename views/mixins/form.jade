@@ -74,6 +74,7 @@ mixin featuresJavaScripts()
      wideArea();
   if hasFeature('codemirror')
     +asset("/vendor/codemirror/codemirror.min.js")
+    +asset("/js/codemirror.inline-attach.js")
     script.
       Jingo.cmInstance = CodeMirror.fromTextArea(document.getElementById("editor"), {
         lineNumbers: true,
@@ -89,6 +90,7 @@ mixin featuresJavaScripts()
           }
         }
       });
+      inlineAttach.attachToCodeMirror(Jingo.cmInstance);
       Jingo.toolbar();
 
 mixin warning()
