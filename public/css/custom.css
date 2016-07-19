@@ -252,7 +252,6 @@ dl.search-results dt {
   font-size: 120%;
 }
 
-h2,
 h1 {
   border-bottom: 1px solid #ddd;
   font-family:'Roboto Slab', 'Montserrat', 'Helvetica', 'Ubuntu', sans-serif;
@@ -264,8 +263,20 @@ h1 {
   font-size: 32px;
 }
 
+#content h1 {
+  color: #0083c9;
+}
+
 h2 {
+  border-bottom: 1px solid #ddd;
+  font-family:'Roboto', 'Montserrat', 'Helvetica', 'Ubuntu', sans-serif;
+  font-weight: 700;
+  margin: 0 0 200pxpx 0;
   font-size: 24px;
+}
+
+h2.toc {
+    font-family:'Roboto Slab', 'Montserrat', 'Helvetica', 'Ubuntu', sans-serif;
 }
 
 h3 {
@@ -274,6 +285,10 @@ h3 {
 
 h3 {
   margin: 0 0 10px 0;
+}
+
+h4 {
+  font-size: 15px;
 }
 
 h1 a, h1 a:hover,

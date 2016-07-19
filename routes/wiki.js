@@ -1,4 +1,5 @@
 var router = require("express").Router(),
+  util = require("util"),
   tools  = require("../lib/tools"),
   path = require("path"),
   renderer = require("../lib/renderer"),
@@ -122,7 +123,7 @@ function _getWikiPage(req, res) {
               var toc = new models.TOC(m[3],page_url);
               proms.push(
                 toc.fetch().then(function(ret){
-                  console.log("Model TOC is: -->",ret);
+                  console.log("Model TOC is: -->",util.inspect(ret,{depth:null}));
                   console.log("<--")
                   TOC_HTML = renderer.makeTOCHTML(ret,page_url)
                   console.log("HTML TOC is: -->",TOC_HTML);

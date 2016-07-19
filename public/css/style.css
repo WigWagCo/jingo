@@ -816,12 +816,15 @@ a.btn-auth:hover {
 
 .in-page-tools .tool i {
   font-size: 14px;
+  padding-left: 4px;
 }
 
 .tool .button-txt {
   font-size: 10px;
   display: inline;
   top: -2px;
+  padding-right: 6px;
+  padding-left: 6px;
   position: relative;
 }
 
