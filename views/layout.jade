@@ -1,4 +1,5 @@
 include mixins/links
+include mixins/collaborators
 
 - if (!isAjax)
   doctype htmltools
@@ -67,7 +68,6 @@ include mixins/links
           else
             #main.hide-tools.col-md-9
               block content
-
         else
           if hasSidebar()
             #main.hide-tools.col-md-9
@@ -80,6 +80,11 @@ include mixins/links
           if TOC_HTML!=null
             .col-md-2.with-sidebar
               .content !{_sidebar}
+        else
+          if TOC_HTML!=null
+            +collaborators(collabs,"far-right")
+          else
+            +collaborators(collabs,"")
 
         if hasFooter()
           .row

@@ -1,0 +1,10 @@
+mixin collaborators(list,stylez)
+	#collaborators(class="#{stylez}")
+		if(list)
+			| contributors
+			br
+			each item in list
+				ul
+					li(data-tooltip="#{item.author}")
+						if item.email
+							img(src=gravatar().url("#{item.email}", {s:16}))

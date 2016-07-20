@@ -828,17 +828,58 @@ a.btn-auth:hover {
   position: relative;
 }
 
+#collaborators {
+  font-size: 11px;
+}
 
-/** open it up on modern laptops / desktops */
-@media (min-width: 1600px) {
-  .container {
-    width: 1500px;
-  }
-  .with-sidebar.sidebar-right {
-    float: right;
-    margin-right: -230px;
-    width: 230px;
-  }
+#collaborators ul
+{
+margin: 0;
+padding: 0;
+padding-top: 2px;
+margin-left: -2px;
+list-style-type: none;
+width:130px;
+}
+#collaborators ul li 
+{ 
+  display: inline; 
+  padding: 2px;
+  position: relative;
+}
+
+#collaborators ul li img
+{ 
+  padding: 2px;
+}
+
+#collaborators ul li[data-tooltip]:before {
+  position: absolute;
+  left: 0;
+  top: -40px;
+  background-color: #0094d9;
+  color: #ffffff;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 5px;
+  padding: 0 15px;
+  content: attr(data-tooltip);
+  white-space: nowrap;
+  display: none;
+}
+
+#collaborators ul li[data-tooltip]:after {
+  position: absolute;
+  left: 5px;
+  top: -10px;
+  border-top: 7px solid #0094d9;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  content: "";
+  display: none;
+}
+#collaborators ul li[data-tooltip]:hover:after, #collaborators ul li[data-tooltip]:hover:before {
+  display: block;
 }
 
 
@@ -868,6 +909,29 @@ a.btn-auth:hover {
     top: 41px;
     left: 60%;
   }
+
+  #collaborators {
+    margin-left: 1060px;
+  }
+
 }
 
+/** open it up on modern laptops / desktops */
+@media (min-width: 1600px) {
+  .container {
+    width: 1500px;
+  }
+  .with-sidebar.sidebar-right {
+    float: right;
+    margin-right: -230px;
+    width: 230px;
+  }
+  #collaborators {
+    margin-left: 1365px;
+  }
+  #collaborators.far-right {
+    margin-left: 1485px;
+  }
+
+}
 

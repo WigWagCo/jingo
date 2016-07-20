@@ -31,6 +31,7 @@ function _getHistory(req, res) {
 
     // FIXME better manage an error here
     if (!page.error) {
+      console.log("history:",util.inspect(history,{depth:null}))
       res.render("history", {
         items: history,
         title: "History of " + page.name,
@@ -138,13 +139,35 @@ function _getWikiPage(req, res) {
         return Promiserr.all(proms); // wait for any deferred, then fulfill
       }
 
-      doPreRender().then(function(){
+      var _collabs = null;
+
+      doPreRender()
+      .then(function(){
+        return page.fetchHistory().then(function(history){
+          // we only want the contributors, not all of the history:
+          var list = {};
+          for(var z=0;z<history.length;z++) {
+            list[history[z].email] = {
+              author: history[z].author,
+              email: history[z].email,
+            }
+          }
+          var collabs = [];
+          var keyz = Object.keys(list);
+          for(var z=0;z<keyz.length;z++) {
+            collabs.push(list[keyz[z]]);
+          }
+          _collabs = collabs;
+        });
+      })
+      .then(function(){
         res.render("show", {
           page: page,
           title: app.locals.config.get("application").title + " – " + page.title,
           content: renderer.render("# " + page.title + "\n" + page.content),
           CONTENT_STYLE: CONTENT_STYLE,
-          TOC_HTML: TOC_HTML
+          TOC_HTML: TOC_HTML,
+          collabs: _collabs
         });
       }).catch(function(e){
         console.error("@catch doPreRender:",e);
