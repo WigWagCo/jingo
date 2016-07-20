@@ -3,8 +3,8 @@ mixin collaborators(list,stylez)
 		if(list)
 			| contributors
 			br
-			each item in list
-				ul
+			ul
+				each item in list
 					li(data-tooltip="#{item.author}")
 						if item.email
 							img(src=gravatar().url("#{item.email}", {s:16}))
