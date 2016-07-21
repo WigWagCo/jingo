@@ -1,0 +1,52 @@
+#!/bin/bash
+# /etc/init.d/jingod: starts Jingo wiki
+
+### BEGIN INIT INFO
+# Provides:             jingo
+# Required-Start:       $remote_fs $time
+# Required-Stop:        $remote_fs $time
+# Should-Start:         $network
+# Should-Stop:          $network
+# Default-Start:        4 5
+# Default-Stop:         0 1 6
+# Short-Description:    Wiki for Wigwag
+### END INIT INFO
+
+JINGOROOT="/home/ubuntu/work/jingo"
+JINGO_CMD="/usr/local/bin/node ${JINGOROOT}/jingo -c ${JINGOROOT}/config.yaml"
+
+function run_jingo() {
+
+    pushd $JINGOROOT
+    $JINGO_CMD > /dev/null 2>&1 &
+    JPID=$!
+    echo $JPID > /var/run/jingo.pid
+    popd
+}
+
+function stop_jingo() {
+    if [ -e /var/run/jingo.pid ] ; then
+        kill `cat /var/run/jingo.pid`
+    fi
+}
+
+case "$1" in
+    start)
+        echo "Starting Jingo service."
+        run_jingo
+        ;;
+    stop)
+        echo "Stopping jingo"
+        stop_jingo
+        ;;
+    restart)
+        stop_jingo
+        run_jingo
+        ;;
+      *)
+        echo "Usage: $0 {start|stop|restart}"
+    exit 1
+esac
+
+exit 0
+
