@@ -1,3 +1,35 @@
+WigWag additions
+----------------
+
+**Table of Contents**
+
+To add a table of contents, using a `PRAGMA` which is new thing we have added in.
+
+In order to keep the actual markdown content as compatible with generic markdown, to add a TOC you put in something which would look like a comment in markdown:
+
+```
+[//]: # "PRAGMA TOC Tutorial:Step 1:sub step 1"
+```
+
+This will create a TOC section on the left side. Similar to the way MDN's wiki works. (I actually really like their engine, which is completely open-source, but it's just so incredibly complicated I avoided it.)
+
+![Screenshot](https://dl.dropboxusercontent.com/u/535411/toc.jpg)
+
+**Images**
+
+You can drag and drop images to the wiki. In the editor, simply drag and drop an image file from Finder / Explorer. Or copy and paste a file using the clipboard. Both ways should work in Firefox and Chrome. IE - well - just don't care. good luck with that.
+
+When you copy/paste or drag-n-drop you will see a popup. The popup wil ask for the alt-text for the image. Bear in mind this text is also used for indexing in sitemap.xml, which the wiki also now supports. So whatever text you enter will be picked up by search engines.
+
+Copy/paste should work with Grab in OS X.
+Here the alt text was `Special text!!`
+
+![Screenshot image](https://dl.dropboxusercontent.com/u/535411/image-markdown.png)
+
+**Sitemaps**
+
+The wiki now support sitemap.xml. If you go to the wiki address `/sitemap.xml` a dynamically generated sitemap is generated every X hours.
+
 [![NPM](https://nodei.co/npm/jingo.png?compact=true)](https://npmjs.org/package/jingo)
 
 [ ![Codeship Status for claudioc/jingo](https://www.codeship.io/projects/4c413870-353e-0132-115c-220292a78f73/status)](https://www.codeship.io/projects/40997)
