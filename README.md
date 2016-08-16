@@ -15,6 +15,16 @@ This will create a TOC section on the left side. Similar to the way MDN's wiki w
 
 ![Screenshot](https://dl.dropboxusercontent.com/u/535411/toc.jpg)
 
+**Custom Styles per page**
+
+There are times when the default styling sucks for specific page. This pragma allows you to fix this:
+
+```
+[//]: # "PRAGMA CONTENT_STYLE width:150%"
+```
+
+Whatever string is behing `CONTENT_STYLE` will be added to the block style for the content. Here `width:150%` was the `style` field on the block content. If you want see exactly what it does just add something crazy in and open up the developer window and find it. Anyway, this will allow you make the content style the way you need in certain situations.
+
 **Images**
 
 You can drag and drop images to the wiki. In the editor, simply drag and drop an image file from Finder / Explorer. Or copy and paste a file using the clipboard. Both ways should work in Firefox and Chrome. IE - well - just don't care. good luck with that.
